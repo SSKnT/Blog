@@ -14,7 +14,6 @@ This project is a dynamic blog website developed using Django. It allows users t
 - Django
 - Python
 - HTML/CSS
-- JavaScript (optional, if used)
 
 ## Installation
 1. Clone the repository:
