@@ -1,0 +1,53 @@
+{% extends 'My_List/base.html'%}
+
+{% block content %}
+
+        <article class="media content-section animate__animated animate__fadeIn">
+          <img class="rounded-circle hover-rotate article-img animate__animated animate__rotateIn"src="{{post.Author.profile.image.url}}">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2" href="{% url 'user_post_view' post.Author.username%}">{{ post.Author }}</a>
+                <small class="text-muted">{{ post.Date |date:"F d, Y" }}</small>
+                {% if object.Author == user %}
+                  <div>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update_view' object.id %}">Update</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete_view' object.id %}">Delete</a>
+                  </div>
+                {% endif %}
+              </div>
+              <h2 class="article-title">{{ post.Title }}</h2>
+              <div>
+                <p class='lead'>{{ post.Content }}</p>
+                </div>
+            </div>
+          </article>
+          
+          <hr>
+          
+          <h2 class="font-italic">Comments</h2>
+          <br>
+          <a class="btn btn-outline-secondary btn-sm" style="border-radius:1rem;" href="{% url 'comment_create' pk=post.id %}">
+            <i class="fas fa-plus fa-xs"></i> comment</a>
+      <!-- Loop through comments -->
+      {% for comment in comments %}
+      <hr>
+        <div class="media mt-4">
+           <img src="{{ comment.author.profile.image.url }}" class="mr-3 rounded-circle" alt="User Profile Picture" style="width: 35px;height: 35px">
+            
+           
+           <div class="media-body">
+             <h5 class="mt-0">{{ comment.author.username }}</h5>
+             <p>{{ comment.content }}</p>
+              <small>{{ comment.date | date:"F d, Y" }}</small>
+              {% if comment.author.username == user.username %}
+            <div>
+              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'comment_delete' comment.id %}">Delete</a>
+            </div>
+            {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+      <hr>
+          </article>
+
+{% endblock content %}
